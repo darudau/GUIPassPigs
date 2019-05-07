@@ -17,7 +17,10 @@ import javafx.scene.layout.VBox;
 public class PigsGameGUI extends BorderPane implements EventHandler<ActionEvent>
 {
 	/** Constant to state when it is the AI's turn */
-	private final int AI_TURN = 0;
+	private final int AI_TURN = 1;
+
+	/** Pass Pigs Player */
+	private PassPigsPlayer aiPlayer;
 
 	/** Pass Pigs Game Object */
 	private PassThePigsGame game;
@@ -73,6 +76,7 @@ public class PigsGameGUI extends BorderPane implements EventHandler<ActionEvent>
 	public PigsGameGUI()
 	{
 		game = new PassThePigsGame(2);
+		aiPlayer = new PassPigsPlayer();
 
 		this.menuBar = new MenuBar();
 		this.gameMenu = new Menu("Game");
@@ -173,10 +177,7 @@ public class PigsGameGUI extends BorderPane implements EventHandler<ActionEvent>
 				// redisplays the winner alert until the user starts a new game.
 				displayWinner();
 			}
-			else if (game.getPlayerTurn() == AI_TURN)
-			{
-				// AI's turn
-			}
+
 			else
 			{
 				this.rollStatusText.setText(game.playerAction(1)
@@ -201,7 +202,21 @@ public class PigsGameGUI extends BorderPane implements EventHandler<ActionEvent>
 			}
 			else if (game.getPlayerTurn() == AI_TURN)
 			{
+				while (game.getPlayerTurn() == AI_TURN)
+				{
+					// AI's turn
+					System.out.println("AI's Turn");
+					game.playerAction(aiPlayer.makeMove(game.getPlayerScore(0),
+							game.getPlayerScore(1)));
 
+					this.rollStatusText.setText(game.playerAction(1)
+							+ "score for your turn is: " + game.getTurnScore());
+					System.out.println(rollStatusText.getText());
+
+				}
+				this.turnStatus
+						.setText("Player " + game.getPlayerTurn() + "\'s Turn");
+				currentPlayer = game.getPlayerTurn();
 			}
 			else
 			{
