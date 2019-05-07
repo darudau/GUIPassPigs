@@ -1,4 +1,5 @@
 package application;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -147,9 +148,6 @@ public class PassThePigsGame
 
 		int pig1Pos = pig1.rollPig();
 		int pig2Pos = pig2.rollPig();
-
-		System.out.println("Pig1: " + pig1Pos);
-		System.out.println("Pig2: " + pig2Pos);
 
 		pig1PrevPos = pig1.intPigPositionToString(pig1Pos);
 		pig2PrevPos = pig2.intPigPositionToString(pig2Pos);

@@ -8,12 +8,17 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class PigsGameGUI extends BorderPane implements EventHandler<ActionEvent>
 {
+	/** Constant to state when it is the AI's turn */
+	private final int AI_TURN = 0;
+
 	/** Pass Pigs Game Object */
 	private PassThePigsGame game;
 
@@ -50,6 +55,9 @@ public class PigsGameGUI extends BorderPane implements EventHandler<ActionEvent>
 	/** Current Roll Status */
 	private Label rollStatusText;
 
+	/** Shows whose turn it is */
+	private Label turnStatus;
+
 	/** HBox for Buttons */
 	private HBox buttons;
 
@@ -58,6 +66,9 @@ public class PigsGameGUI extends BorderPane implements EventHandler<ActionEvent>
 
 	/** Pass Pigs Button */
 	private Button passPigsButton;
+
+	/** stores the current player on display in the GUI */
+	private int currentPlayer;
 
 	public PigsGameGUI()
 	{
@@ -93,6 +104,11 @@ public class PigsGameGUI extends BorderPane implements EventHandler<ActionEvent>
 		this.statusVBox = new VBox();
 		this.scoreboardText = new Label();
 		this.rollStatusText = new Label();
+		this.turnStatus = new Label();
+		this.statusVBox.getChildren().add(turnStatus);
+		this.turnStatus.setText("Player " + game.getPlayerTurn() + "\'s Turn");
+		this.currentPlayer = game.getPlayerTurn();
+		this.statusVBox.getChildren().add(new Separator());
 		this.statusVBox.getChildren().add(rollStatusText);
 		this.statusVBox.getChildren().add(new Separator());
 		this.statusVBox.getChildren().add(this.scoreboardText);
@@ -109,14 +125,23 @@ public class PigsGameGUI extends BorderPane implements EventHandler<ActionEvent>
 		this.setBottom(buttons);
 		this.setCenter(statusVBox);
 
+		this.scoreboardText.setText(game.scoreboardToString());
+
 	}
 
+	/**
+	 * Event handling method for the PigGameGUI.
+	 * 
+	 * @param event
+	 *            the event that has taken place
+	 */
 	@Override
 	public void handle(ActionEvent event)
 	{
 		if (event.getSource().equals(newGameOption))
 		{
 			game.newGame();
+			this.scoreboardText.setText(game.scoreboardToString());
 		}
 
 		if (event.getSource().equals(quitOption))
@@ -126,7 +151,7 @@ public class PigsGameGUI extends BorderPane implements EventHandler<ActionEvent>
 
 		if (event.getSource().equals(aboutGameOption))
 		{
-			// print out information about the game on anohter window
+			// print out information about the game on another window
 		}
 
 		if (event.getSource().equals(rulesOption))
@@ -139,18 +164,69 @@ public class PigsGameGUI extends BorderPane implements EventHandler<ActionEvent>
 			// display roll stats in another window
 		}
 
+		// user has selected the roll pigs button
 		if (event.getSource().equals(rollPigsButton))
 		{
 			// roll the pigs
-			this.rollStatusText.setText(game.playerAction(1));
-			this.scoreboardText.setText(game.scoreboardToString());
+			if (game.isGameOver())
+			{
+				// redisplays the winner alert until the user starts a new game.
+				displayWinner();
+			}
+			else if (game.getPlayerTurn() == AI_TURN)
+			{
+				// AI's turn
+			}
+			else
+			{
+				this.rollStatusText.setText(game.playerAction(1)
+						+ "score for your turn is: " + game.getTurnScore());
+
+				if (game.getPlayerTurn() != currentPlayer)
+				{
+					this.turnStatus
+							.setText("Player " + game.getPlayerTurn() + "\'s Turn");
+					currentPlayer = game.getPlayerTurn();
+				}
+			}
 		}
 
+		// User has selected the pass pigs button
 		if (event.getSource().equals(passPigsButton))
 		{
-			this.rollStatusText.setText(game.playerAction(2));
-			// pass the pigs
+			if (game.isGameOver())
+			{
+				// redisplays the winner alert until the user starts a new game
+				displayWinner();
+			}
+			else if (game.getPlayerTurn() == AI_TURN)
+			{
+
+			}
+			else
+			{
+				this.rollStatusText.setText(game.playerAction(2));
+
+				if (game.isGameOver())
+				{
+					displayWinner();
+				}
+
+				this.turnStatus
+						.setText("Player " + game.getPlayerTurn() + "\'s Turn");
+				this.scoreboardText.setText(game.scoreboardToString());
+			}
+
 		}
+	}
+
+	private void displayWinner()
+	{
+		Alert winner = new Alert(AlertType.INFORMATION);
+		winner.setTitle("Congratulations Player " + game.getWinner());
+		winner.setHeaderText("You won the game");
+		winner.setContentText("Thank you for playing");
+		winner.showAndWait();
 	}
 
 }

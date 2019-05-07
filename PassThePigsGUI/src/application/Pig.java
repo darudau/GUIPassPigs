@@ -1,4 +1,5 @@
 package application;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -79,7 +80,6 @@ public class Pig
 	 */
 	public int rollPig()
 	{
-		System.out.println(sampleSpace.get(rand.nextInt(100)));
 		return sampleSpace.get(rand.nextInt(100));
 	}
 
@@ -114,15 +114,4 @@ public class Pig
 		return outcomeNames[position];
 	}
 
-	// debugging method may remove later
-	// TODO
-	public void printSampleSpace()
-	{
-		System.out.println("Smaple Space");
-		System.out.println("SampleSpace Size = " + sampleSpace.size());
-		for (int i = 0; i < sampleSpace.size(); i++)
-		{
-			System.out.println(i + ": " + sampleSpace.get(i).intValue());
-		}
-	}
 }
