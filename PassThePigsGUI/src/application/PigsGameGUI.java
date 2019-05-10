@@ -119,7 +119,7 @@ public class PigsGameGUI extends BorderPane
 		this.rollStatusText = new Label();
 		this.turnStatus = new Label();
 		this.statusVBox.getChildren().add(turnStatus);
-		this.turnStatus.setText("Player " + game.getPlayerTurn() + "\'s Turn");
+		this.setTurnStatus();
 		game.getPlayerTurn();
 		this.statusVBox.getChildren().add(new Separator());
 		this.statusVBox.getChildren().add(rollStatusText);
@@ -258,17 +258,28 @@ public class PigsGameGUI extends BorderPane
 
 	private void displayWinner()
 	{
-		Alert winner = new Alert(AlertType.INFORMATION);
-		winner.setTitle("Congratulations Player " + game.getWinner());
-		winner.setHeaderText("Player " + game.getWinner() + ", you won the game");
-		winner.setContentText("Thank you for playing");
-		winner.showAndWait();
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Game Over");
+
+		if (game.getWinner() == HUMAN_TURN)
+		{
+			alert.setHeaderText("Congratulation: You won the game");
+			alert.setContentText(
+					"You have defeated the AI at Pass the Pigs\nThanks for playing");
+		}
+		else
+		{
+			alert.setHeaderText("Sorry, You lost to the AI");
+			alert.setContentText("Better luck next time\nThanks for playing");
+		}
+
+		alert.showAndWait();
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1)
 	{
-		this.turnStatus.setText("Player " + game.getPlayerTurn() + "'s turn");
+		setTurnStatus();
 
 		if (game.isGameOver())
 		{
@@ -278,6 +289,19 @@ public class PigsGameGUI extends BorderPane
 		{
 			this.rollStatusText.setText("");
 			this.scoreboardText.setText(game.scoreboardToString());
+		}
+	}
+
+	private void setTurnStatus()
+	{
+		if (game.getPlayerTurn() == AI_TURN)
+		{
+			this.turnStatus.setText("AI's Turn: Press View AI's Roll to Continue");
+		}
+		else
+		{
+			this.turnStatus
+					.setText("Your Turn, Select either Roll or Pass the pigs");
 		}
 	}
 
