@@ -2,6 +2,7 @@ package application;
 
 public class PassPigsPlayer
 {
+	private int numMoves;
 
 	/**
 	 * Constructor
@@ -9,7 +10,7 @@ public class PassPigsPlayer
 	 */
 	public PassPigsPlayer()
 	{
-
+		numMoves = 0;
 	}
 
 	/**
@@ -22,7 +23,13 @@ public class PassPigsPlayer
 	 */
 	public int makeMove(int aiScore, int humanScore)
 	{
-		// TODO for now the AI rolls until it is forced to pass
+		System.out.println("AI Moves: " + numMoves);
+		if (numMoves == 4)
+		{
+			numMoves = 0;
+			return 2;
+		}
+		numMoves++;
 		return 1;
 	}
 

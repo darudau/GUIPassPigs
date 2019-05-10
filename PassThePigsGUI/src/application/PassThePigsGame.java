@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Random;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Random;
  * @version 0.1 April 20, 2019
  *
  */
-public class PassThePigsGame
+public class PassThePigsGame extends Observable
 {
 	/** The total number players in the game */
 	private int numPlayers;
@@ -251,6 +252,8 @@ public class PassThePigsGame
 				turnScore = 0; // reset turn score;
 				playerTurn = (playerTurn + 1) % numPlayers; // move to next
 															// player
+				this.setChanged();
+				this.notifyObservers();
 				return "Pig Out, loose points for turn";
 			}
 			else if (rollScore == OINKER)
@@ -262,9 +265,13 @@ public class PassThePigsGame
 				turnScore = 0; // reset turn score
 				playerTurn = (playerTurn + 1) % numPlayers; // move to next //
 															// player
+				this.setChanged();
+				this.notifyObservers();
 				return "Oinker, loose all points for game";
 			}
 
+			this.setChanged();
+			this.notifyObservers();
 			turnScore += rollScore;
 			return rollToString();
 		}
@@ -278,6 +285,8 @@ public class PassThePigsGame
 			turnScore = 0; // reset turn score.
 			// provides circular queue behavior for the players
 			playerTurn = (playerTurn + 1) % numPlayers;
+			this.setChanged();
+			this.notifyObservers();
 			return "Passing pigs to player " + playerTurn;
 		}
 		else
