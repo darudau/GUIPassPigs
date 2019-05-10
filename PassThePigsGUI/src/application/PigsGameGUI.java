@@ -76,14 +76,14 @@ public class PigsGameGUI extends BorderPane
 	/** Pass Pigs Button */
 	private Button passPigsButton;
 
-	/** stores the current player on display in the GUI */
-	private int currentPlayer;
+	/** AI's Turn Button */
+	private Button aiTurnButton;
 
 	public PigsGameGUI()
 	{
 		game = new PassThePigsGame(2);
 		aiPlayer = new PassPigsPlayer();
-		
+
 		// makes the GUI an observer of the model
 		game.addObserver(this);
 
@@ -120,7 +120,7 @@ public class PigsGameGUI extends BorderPane
 		this.turnStatus = new Label();
 		this.statusVBox.getChildren().add(turnStatus);
 		this.turnStatus.setText("Player " + game.getPlayerTurn() + "\'s Turn");
-		this.currentPlayer = game.getPlayerTurn();
+		game.getPlayerTurn();
 		this.statusVBox.getChildren().add(new Separator());
 		this.statusVBox.getChildren().add(rollStatusText);
 		this.statusVBox.getChildren().add(new Separator());
@@ -131,8 +131,11 @@ public class PigsGameGUI extends BorderPane
 		this.rollPigsButton.setOnAction(this);
 		this.passPigsButton = new Button("Pass the Pigs");
 		this.passPigsButton.setOnAction(this);
+		this.aiTurnButton = new Button("View AI's Roll");
+		this.aiTurnButton.setOnAction(this);
 		this.buttons.getChildren().add(rollPigsButton);
 		this.buttons.getChildren().add(passPigsButton);
+		this.buttons.getChildren().add(this.aiTurnButton);
 
 		this.setTop(menuBar);
 		this.setBottom(buttons);
@@ -187,19 +190,10 @@ public class PigsGameGUI extends BorderPane
 				// redisplays the winner alert until the user starts a new game.
 				displayWinner();
 			}
-
 			else
 			{
-				this.rollStatusText.setText(
-						this.rollStatusText.getText() + "\n" + game.playerAction(1)
-								+ "score for your turn is: " + game.getTurnScore());
-
-				if (game.getPlayerTurn() != currentPlayer)
-				{
-					this.turnStatus
-							.setText("Player " + game.getPlayerTurn() + "\'s Turn");
-					currentPlayer = game.getPlayerTurn();
-				}
+				this.rollStatusText.setText(game.playerAction(1)
+						+ "score for your turn is: " + game.getTurnScore());
 			}
 		}
 
@@ -209,6 +203,18 @@ public class PigsGameGUI extends BorderPane
 		{
 			game.playerAction(2);
 		}
+
+		if (event.getSource().equals(this.aiTurnButton)
+				&& game.getPlayerTurn() == AI_TURN)
+		{
+			if (game.isGameOver())
+			{
+				displayWinner();
+			}
+
+			aiTurn();
+		}
+
 		// {
 		// if (game.isGameOver())
 		// {
@@ -254,7 +260,7 @@ public class PigsGameGUI extends BorderPane
 	{
 		Alert winner = new Alert(AlertType.INFORMATION);
 		winner.setTitle("Congratulations Player " + game.getWinner());
-		winner.setHeaderText("You won the game");
+		winner.setHeaderText("Player " + game.getWinner() + ", you won the game");
 		winner.setContentText("Thank you for playing");
 		winner.showAndWait();
 	}
@@ -262,20 +268,35 @@ public class PigsGameGUI extends BorderPane
 	@Override
 	public void update(Observable arg0, Object arg1)
 	{
+		this.turnStatus.setText("Player " + game.getPlayerTurn() + "'s turn");
+
 		if (game.isGameOver())
 		{
 			displayWinner();
 		}
-
-		else if (game.getPlayerTurn() == AI_TURN)
+		else
 		{
+			this.rollStatusText.setText("");
+			this.scoreboardText.setText(game.scoreboardToString());
+		}
+	}
 
-			this.rollStatusText.setText(game.playerAction(aiPlayer.makeMove(
-					game.getPlayerScore(AI_TURN), game.getPlayerScore(HUMAN_TURN))));
-			displayAITurnOverMessage();
+	private void aiTurn()
+	{
+
+		String turnString = "";
+
+		while (game.getPlayerTurn() == AI_TURN)
+		{
+			turnString += game
+					.playerAction(aiPlayer.makeMove(game.getPlayerScore(AI_TURN),
+							game.getPlayerScore(HUMAN_TURN)))
+					+ "score for your turn is: " + game.getTurnScore() + "\n";
 		}
 
-		this.scoreboardText.setText(game.scoreboardToString());
+		this.rollStatusText.setText(turnString);
+		// displayAITurnOverMessage();
+
 	}
 
 	private void displayAITurnOverMessage()

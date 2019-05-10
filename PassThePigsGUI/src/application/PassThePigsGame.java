@@ -253,7 +253,8 @@ public class PassThePigsGame extends Observable
 															// player
 				this.setChanged();
 				this.notifyObservers();
-				return "Pig Out, loose points for turn";
+				return "Pig Out, loose points for turn.  Passing Pigs to Player "
+						+ playerTurn + ".  \n";
 			}
 			else if (rollScore == OINKER)
 			{
@@ -266,7 +267,8 @@ public class PassThePigsGame extends Observable
 															// player
 				this.setChanged();
 				this.notifyObservers();
-				return "Oinker, loose all points for game";
+				return "Oinker, loose all points for game.  Passing Pigs to Player "
+						+ playerTurn + ".  \n";
 			}
 
 			this.setChanged();
@@ -286,7 +288,7 @@ public class PassThePigsGame extends Observable
 			playerTurn = (playerTurn + 1) % numPlayers;
 			this.setChanged();
 			this.notifyObservers();
-			return "Passing pigs to player " + playerTurn;
+			return "Passing pigs to player " + playerTurn + ". \n";
 		}
 		else
 		{
