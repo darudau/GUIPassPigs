@@ -83,7 +83,8 @@ public class PigsGameGUI extends BorderPane
 	{
 		game = new PassThePigsGame(2);
 		aiPlayer = new PassPigsPlayer();
-
+		
+		// makes the GUI an observer of the model
 		game.addObserver(this);
 
 		this.menuBar = new MenuBar();

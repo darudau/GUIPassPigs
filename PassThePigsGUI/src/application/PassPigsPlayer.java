@@ -23,6 +23,9 @@ public class PassPigsPlayer
 	 */
 	public int makeMove(int aiScore, int humanScore)
 	{
+		
+		//TODO make proper ai
+		// this AI always makes 3 rolls and passes
 		System.out.println("AI Moves: " + numMoves);
 		if (numMoves == 4)
 		{

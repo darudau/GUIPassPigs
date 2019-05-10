@@ -81,7 +81,6 @@ public class PassThePigsGame extends Observable
 	 */
 	public PassThePigsGame(int newNumPlayers)
 	{
-		// TODO constructor
 		numPlayers = newNumPlayers;
 
 		// initialize the scoreboard
