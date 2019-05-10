@@ -17,6 +17,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * PassPigsGUI class creates a GUI for the Pass the Pigs Game
+ * 
+ * @author Douglas Rudau
+ * @version May 10, 2019
+ *
+ */
 public class PigsGameGUI extends BorderPane
 		implements Observer, EventHandler<ActionEvent>
 {
@@ -79,6 +86,9 @@ public class PigsGameGUI extends BorderPane
 	/** AI's Turn Button */
 	private Button aiTurnButton;
 
+	/**
+	 * Constructor
+	 */
 	public PigsGameGUI()
 	{
 		game = new PassThePigsGame(2);
@@ -168,16 +178,19 @@ public class PigsGameGUI extends BorderPane
 		if (event.getSource().equals(aboutGameOption))
 		{
 			// print out information about the game on another window
+			displayAboutGame();
 		}
 
 		if (event.getSource().equals(rulesOption))
 		{
 			// display rules in another window
+			displayRules();
 		}
 
 		if (event.getSource().equals(rollStatsOption))
 		{
 			// display roll stats in another window
+			displayRollStats();
 		}
 
 		// user has selected the roll pigs button
@@ -211,49 +224,51 @@ public class PigsGameGUI extends BorderPane
 			{
 				displayWinner();
 			}
-
-			aiTurn();
+			else
+			{
+				aiTurn();
+			}
 		}
+	}
 
-		// {
-		// if (game.isGameOver())
-		// {
-		// // redisplays the winner alert until the user starts a new game
-		// displayWinner();
-		// }
-		// else if (game.getPlayerTurn() == AI_TURN)
-		// {
-		// while (game.getPlayerTurn() == AI_TURN)
-		// {
-		// // AI's turn
-		// System.out.println("AI's Turn");
-		// game.playerAction(aiPlayer.makeMove(game.getPlayerScore(0),
-		// game.getPlayerScore(1)));
-		//
-		// this.rollStatusText.setText(game.playerAction(1)
-		// + "score for your turn is: " + game.getTurnScore());
-		// System.out.println(rollStatusText.getText());
-		//
-		// }
-		// this.turnStatus
-		// .setText("Player " + game.getPlayerTurn() + "\'s Turn");
-		// currentPlayer = game.getPlayerTurn();
-		// }
-		// else
-		// {
-		// this.rollStatusText.setText(game.playerAction(2));
-		//
-		// if (game.isGameOver())
-		// {
-		// displayWinner();
-		// }
-		//
-		// this.turnStatus
-		// .setText("Player " + game.getPlayerTurn() + "\'s Turn");
-		// this.scoreboardText.setText(game.scoreboardToString());
-		// }
-		//
-		// }
+	/**
+	 * Displays the statistics for each type of roll
+	 */
+	private void displayRollStats()
+	{
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Roll Statistics");
+		alert.setHeaderText("Statistics for each type of roll");
+		alert.setContentText(
+				"Outcome\t\tProbabiltiy\nPlain Side\t\t35%\nDottedSide\t30%"
+						+ "\nRazorback\t22%\nTrotter\t\t 9%\nSnouter\t\t 3"
+						+ "%\nLeaning Jowler\t 1%");
+		alert.show();
+	}
+
+	/**
+	 * Displays the rules
+	 */
+	private void displayRules()
+	{
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Pass the Pigs Rules");
+		alert.setHeaderText("");
+		alert.setContentText("");
+		alert.show();
+	}
+
+	/**
+	 * Displays Information about the game
+	 */
+	private void displayAboutGame()
+	{
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("About Pass the Pigs");
+		alert.setHeaderText("Game created by: Douglas Rudau");
+		alert.setContentText(
+				"Created for COS 389 at Bethel University\nFor the final Project\nMay 10, 2019");
+		alert.show();
 	}
 
 	private void displayWinner()
@@ -276,6 +291,9 @@ public class PigsGameGUI extends BorderPane
 		alert.showAndWait();
 	}
 
+	/**
+	 * Update Function for the obsesrver pattern.
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1)
 	{
@@ -292,6 +310,10 @@ public class PigsGameGUI extends BorderPane
 		}
 	}
 
+	/**
+	 * Method to make the Turn Status more human readable. It converts from
+	 * Player 0 and Player 1 to AI and Human
+	 */
 	private void setTurnStatus()
 	{
 		if (game.getPlayerTurn() == AI_TURN)
@@ -305,6 +327,11 @@ public class PigsGameGUI extends BorderPane
 		}
 	}
 
+	/**
+	 * Method to make the AI's Turn. Uses the PassPigsPlayer instance to figure
+	 * out what to do for the turn. The actions of the AI are displayed in the
+	 * Roll Status area for the human player to observer.
+	 */
 	private void aiTurn()
 	{
 
@@ -319,16 +346,5 @@ public class PigsGameGUI extends BorderPane
 		}
 
 		this.rollStatusText.setText(turnString);
-		// displayAITurnOverMessage();
-
 	}
-
-	private void displayAITurnOverMessage()
-	{
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("AI's Turn is Over");
-		alert.setHeaderText("Press Ok to begin your turn, or view the AI's Actions");
-		alert.showAndWait();
-	}
-
 }
