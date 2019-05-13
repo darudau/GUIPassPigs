@@ -39,6 +39,9 @@ public class PassThePigsGame extends Observable
 
 	private String pig2PrevPos;
 
+	/** the minimum number of points needed to win */
+	public final int POINTS_TO_WIN = 100;
+
 	/**
 	 * Array of integer scores for each possible pig position for a single pig
 	 * Values for special positions are determined in the rollPigs() function.
@@ -47,27 +50,27 @@ public class PassThePigsGame extends Observable
 
 	/** Constants used to represent states for the pigs */
 	// score values are here to allow for modification
-	private final int PLAIN_SIDE = 0;
-	private final int DOTTED_SIDE = 1;
-	private final int RAZORBACK = 2;
-	private final int TROTTER = 3;
-	private final int SNOUTER = 4;
-	private final int LEANING_JOWLER = 5;
-	private final int PIG_OUT = -1;
-	private final int DOUBLE_RAZORBACK = 20;
-	private final int DOUBLE_TROTTER = 20;
-	private final int DOUBLE_SNOUTER = 40;
-	private final int DOUBLE_LEANING_JOWLER = 60;
-	private final int OINKER = -2;
-	private final int DOUBLE_SIDER = 2;
+	public final int PLAIN_SIDE = 0;
+	public final int DOTTED_SIDE = 1;
+	public final int RAZORBACK = 2;
+	public final int TROTTER = 3;
+	public final int SNOUTER = 4;
+	public final int LEANING_JOWLER = 5;
+	public final int PIG_OUT = -1;
+	public final int DOUBLE_RAZORBACK = 20;
+	public final int DOUBLE_TROTTER = 20;
+	public final int DOUBLE_SNOUTER = 40;
+	public final int DOUBLE_LEANING_JOWLER = 60;
+	public final int OINKER = -2;
+	public final int DOUBLE_SIDER = 2;
 
 	/** Possibility of an Oinker */
 	// higher number means lower chance of an oinker.
 	private final int CHANCE_OF_OINKER = 100;
 
 	/** Constants used to represent player actions */
-	private final int ROLL = 1;
-	private final int PASS_TO_NEXT = 2;
+	public final int ROLL = 1;
+	public final int PASS_TO_NEXT = 2;
 
 	/** Score for the current player's turn */
 	private int turnScore;
@@ -117,7 +120,7 @@ public class PassThePigsGame extends Observable
 	{
 		for (int i = 0; i < scoreboard.size(); i++)
 		{
-			if (scoreboard.get(i) >= 100)
+			if (scoreboard.get(i) >= this.POINTS_TO_WIN)
 			{
 				winner = i;
 				return true;
@@ -298,6 +301,10 @@ public class PassThePigsGame extends Observable
 		}
 	}
 
+	/** 
+	 * Converts the roll of a pig to a string
+	 * @return string describing the roll.
+	 */
 	private String rollToString()
 	{
 		return pig1PrevPos + " and " + pig2PrevPos;
