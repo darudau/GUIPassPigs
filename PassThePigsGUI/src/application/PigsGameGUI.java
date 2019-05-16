@@ -273,6 +273,8 @@ public class PigsGameGUI extends BorderPane
 
 	private void displayWinner()
 	{
+		this.scoreboardText.setText(game.scoreboardToString());
+
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Game Over");
 
@@ -334,17 +336,17 @@ public class PigsGameGUI extends BorderPane
 	 */
 	private void aiTurn()
 	{
-
 		String turnString = "";
 
 		while (game.getPlayerTurn() == AI_TURN)
 		{
 			turnString += game
 					.playerAction(aiPlayer.makeMove(game.getPlayerScore(AI_TURN),
-							game.getPlayerScore(HUMAN_TURN)))
+							game.getPlayerScore(HUMAN_TURN), game.getTurnScore()))
 					+ "score for your turn is: " + game.getTurnScore() + "\n";
 		}
 
 		this.rollStatusText.setText(turnString);
+		this.aiPlayer.resetNumMoves();
 	}
 }

@@ -114,4 +114,9 @@ public class Pig
 		return outcomeNames[position];
 	}
 
+	public int getWieght(int pigPosition)
+	{
+		return weights[pigPosition];
+	}
+
 }
