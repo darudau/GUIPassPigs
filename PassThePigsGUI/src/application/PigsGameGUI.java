@@ -343,15 +343,36 @@ public class PigsGameGUI extends BorderPane
 
 		while (game.getPlayerTurn() == AI_TURN)
 		{
-			if (numMoves != 0)
-			{ 
+
+			if (numMoves == 0)
+			{
+				turnString += "AI's First Roll:\n";
+			}
+			else
+			{
 				turnString += "AI's Reasoning\n" + aiPlayer.getAIReasoning() + "\n";
 			}
-			turnString += game
-					.playerAction(aiPlayer.makeMove(game.getPlayerScore(AI_TURN),
-							game.getPlayerScore(HUMAN_TURN), game.getTurnScore()))
-					+ " score for your turn is: " + game.getTurnScore() + "\n";
+
+			if (game.getPlayerTurn() != AI_TURN)
+			{
+				turnString += "AI's Reasoning\n" + aiPlayer.getAIReasoning();
+			}
+
+			int aiMove = aiPlayer.makeMove(game.getPlayerScore(AI_TURN),
+					game.getPlayerScore(HUMAN_TURN), game.getTurnScore());
+
+
+			if(aiMove == game.ROLL)
+			{
+				turnString += game.playerAction(aiMove) + " score for AI's turn is: "
+						+ game.getTurnScore() + "\n";
+			}
+			else
+			{
+				turnString += "AI's reasoning " + aiPlayer.getAIReasoning() + "\n" + game.playerAction(aiMove);
+			}
 			numMoves++;
+
 		}
 
 		this.rollStatusText.setText(turnString);

@@ -83,9 +83,9 @@ public class PassPigsPlayer
 		int scoregap = aiScore - humanScore;
 		double currentEV = getCurrentExpectedValue(turnscore, aiScore);
 
-		// two is added to the numMoves, since the first roll is roll zero in
+		// 1 is added to the numMoves, since the first roll is roll zero in
 		// the indexing, and the AI always rolls at least one time
-		aiReasoning += "Roll: " + (numMoves + 2) + " with ExpectedValue of: "
+		aiReasoning += "Roll: " + (numMoves + 1) + " with ExpectedValue of: "
 				+ currentEV;
 
 		if (scoregap <= 0)
