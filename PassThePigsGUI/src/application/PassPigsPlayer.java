@@ -83,15 +83,18 @@ public class PassPigsPlayer
 		int scoregap = aiScore - humanScore;
 		double currentEV = getCurrentExpectedValue(turnscore, aiScore);
 
-		aiReasoning += "Roll: " + numMoves + " with ExpectedValue of: " + currentEV;
+		// two is added to the numMoves, since the first roll is roll zero in
+		// the indexing, and the AI always rolls at least one time
+		aiReasoning += "Roll: " + (numMoves + 2) + " with ExpectedValue of: "
+				+ currentEV;
 
 		if (scoregap <= 0)
 		{
-			if (scoregap < 20 && currentEV > 0)
+			if (scoregap < PassThePigsGame.POINTS_TO_WIN / 5 && (int) currentEV > 0)
 			{
 				// AI will take more risks as it is behind the player
-				numMoves++;
-				aiReasoning += " AI will Roll the Pigs\n";
+				aiReasoning += " AGGRESSIVE AI will Roll the Pigs\n";
+				this.numMoves++;
 				return PassThePigsGame.ROLL;
 			}
 			else
@@ -106,7 +109,8 @@ public class PassPigsPlayer
 				else
 				{
 					// AI must roll the pigs at least once
-					aiReasoning += " AI will Roll the Pigs\n";
+					aiReasoning += " AGGRESSIVE AI will Roll the Pigs\n";
+					this.numMoves++;
 					return PassThePigsGame.ROLL;
 				}
 			}
@@ -114,12 +118,12 @@ public class PassPigsPlayer
 		}
 		else
 		{
-			if (scoregap < 10 && currentEV > 1)
+			if (scoregap < PassThePigsGame.POINTS_TO_WIN / 10 && (int) currentEV > 1)
 			{
 				// AI is ahead of human player, so it will play more
 				// conservatively here
 				numMoves++;
-				aiReasoning += " AI will Roll the Pigs\n";
+				aiReasoning += " CONSERVATIVE AI will Roll the Pigs\n";
 				return PassThePigsGame.ROLL;
 			}
 			else
@@ -131,11 +135,11 @@ public class PassPigsPlayer
 				}
 				else
 				{
-					aiReasoning += " AI will Roll the Pigs\n";
+					aiReasoning += " CONSERVATIVE AI will Roll the Pigs\n";
+					this.numMoves++;
 					return PassThePigsGame.ROLL;
 				}
 			}
-
 		}
 	}
 

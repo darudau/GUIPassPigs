@@ -344,7 +344,7 @@ public class PigsGameGUI extends BorderPane
 		while (game.getPlayerTurn() == AI_TURN)
 		{
 			if (numMoves != 0)
-			{
+			{ 
 				turnString += "AI's Reasoning\n" + aiPlayer.getAIReasoning() + "\n";
 			}
 			turnString += game
