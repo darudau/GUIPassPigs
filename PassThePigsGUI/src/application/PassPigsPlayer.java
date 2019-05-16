@@ -2,6 +2,8 @@ package application;
 
 public class PassPigsPlayer
 {
+	private String aiReasoning;
+
 	private int numMoves;
 
 	/**
@@ -16,6 +18,7 @@ public class PassPigsPlayer
 	 */
 	public PassPigsPlayer()
 	{
+		aiReasoning = "";
 		numMoves = 0;
 		baseExpectedValue = calculateBaseExpectedValue();
 	}
@@ -76,10 +79,11 @@ public class PassPigsPlayer
 	 */
 	public int makeMove(int aiScore, int humanScore, int turnscore)
 	{
+		aiReasoning = "";
 		int scoregap = aiScore - humanScore;
 		double currentEV = getCurrentExpectedValue(turnscore, aiScore);
 
-		System.out.print("Current ExpectedValue: " + currentEV);
+		aiReasoning += "Roll: " + numMoves + " with ExpectedValue of: " + currentEV;
 
 		if (scoregap <= 0)
 		{
@@ -87,7 +91,7 @@ public class PassPigsPlayer
 			{
 				// AI will take more risks as it is behind the player
 				numMoves++;
-				System.out.print(" AI will Roll the Pigs\n");
+				aiReasoning += " AI will Roll the Pigs\n";
 				return PassThePigsGame.ROLL;
 			}
 			else
@@ -96,13 +100,13 @@ public class PassPigsPlayer
 				{
 					// AI can pass the pigs if it would like since it has rolled
 					// once
-					System.out.print(" AI will Pass the Pigs\n");
+					aiReasoning += " AI will Pass the Pigs\n";
 					return PassThePigsGame.PASS_TO_NEXT;
 				}
 				else
 				{
 					// AI must roll the pigs at least once
-					System.out.print(" AI will Roll the Pigs\n");
+					aiReasoning += " AI will Roll the Pigs\n";
 					return PassThePigsGame.ROLL;
 				}
 			}
@@ -115,35 +119,24 @@ public class PassPigsPlayer
 				// AI is ahead of human player, so it will play more
 				// conservatively here
 				numMoves++;
-				System.out.print(" AI will Roll the Pigs\n");
+				aiReasoning += " AI will Roll the Pigs\n";
 				return PassThePigsGame.ROLL;
 			}
 			else
 			{
 				if (numMoves > 0)
 				{
-					System.out.print(" AI will Pass the Pigs\n");
+					aiReasoning += " AI will Pass the Pigs\n";
 					return PassThePigsGame.PASS_TO_NEXT;
 				}
 				else
 				{
-					System.out.print(" AI will Roll the Pigs\n");
+					aiReasoning += " AI will Roll the Pigs\n";
 					return PassThePigsGame.ROLL;
 				}
 			}
 
 		}
-
-		// // TODO make proper ai
-		// // this AI always makes 3 rolls and passes
-		// System.out.println("AI Moves: " + numMoves);
-		// if (numMoves == 4)
-		// {
-		// numMoves = 0;
-		// return PassThePigsGame.PASS_TO_NEXT;
-		// }
-		// numMoves++;
-		// return PassThePigsGame.ROLL;
 	}
 
 	private double getCurrentExpectedValue(int turnScore, int totalScore)
@@ -159,6 +152,16 @@ public class PassPigsPlayer
 	public void resetNumMoves()
 	{
 		this.numMoves = 0;
+	}
+
+	public String getAIReasoning()
+	{
+		return this.aiReasoning;
+	}
+
+	public void resetAIReasoning()
+	{
+		this.aiReasoning = "";
 	}
 
 }

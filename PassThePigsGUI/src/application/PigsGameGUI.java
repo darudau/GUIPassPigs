@@ -11,6 +11,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
@@ -69,7 +70,7 @@ public class PigsGameGUI extends BorderPane
 	private Label scoreboardText;
 
 	/** Current Roll Status */
-	private Label rollStatusText;
+	private TextArea rollStatusText;
 
 	/** Shows whose turn it is */
 	private Label turnStatus;
@@ -126,7 +127,8 @@ public class PigsGameGUI extends BorderPane
 
 		this.statusVBox = new VBox();
 		this.scoreboardText = new Label();
-		this.rollStatusText = new Label();
+		this.rollStatusText = new TextArea();
+		this.rollStatusText.setEditable(false);
 		this.turnStatus = new Label();
 		this.statusVBox.getChildren().add(turnStatus);
 		this.setTurnStatus();
@@ -206,7 +208,7 @@ public class PigsGameGUI extends BorderPane
 			else
 			{
 				this.rollStatusText.setText(game.playerAction(1)
-						+ "score for your turn is: " + game.getTurnScore());
+						+ " score for your turn is: " + game.getTurnScore());
 			}
 		}
 
@@ -337,13 +339,19 @@ public class PigsGameGUI extends BorderPane
 	private void aiTurn()
 	{
 		String turnString = "";
+		int numMoves = 0;
 
 		while (game.getPlayerTurn() == AI_TURN)
 		{
+			if (numMoves != 0)
+			{
+				turnString += "AI's Reasoning\n" + aiPlayer.getAIReasoning() + "\n";
+			}
 			turnString += game
 					.playerAction(aiPlayer.makeMove(game.getPlayerScore(AI_TURN),
 							game.getPlayerScore(HUMAN_TURN), game.getTurnScore()))
-					+ "score for your turn is: " + game.getTurnScore() + "\n";
+					+ " score for your turn is: " + game.getTurnScore() + "\n";
+			numMoves++;
 		}
 
 		this.rollStatusText.setText(turnString);
