@@ -12,7 +12,7 @@ import java.util.Random;
  * TODO Type Rules here
  * 
  * @author Douglas Rudau
- * @version 0.1 April 20, 2019
+ * @version April 20, 2019
  *
  */
 public class PassThePigsGame extends Observable
@@ -35,8 +35,8 @@ public class PassThePigsGame extends Observable
 	/** The Winner of the game */
 	private int winner;
 
+	/** Previous postion for each of the pigs */
 	private String pig1PrevPos;
-
 	private String pig2PrevPos;
 
 	/** the minimum number of points needed to win */
@@ -147,7 +147,6 @@ public class PassThePigsGame extends Observable
 	{
 		if (isOinker())
 		{
-			// Pigs landed in a position were they touched, which is an Oinker.
 			return OINKER;
 		}
 
@@ -162,32 +161,26 @@ public class PassThePigsGame extends Observable
 			// special cases were the pigs are in the same position.
 			if (pig1Pos == PLAIN_SIDE)
 			{
-				// double plain side
 				return DOUBLE_SIDER;
 			}
 			else if (pig1Pos == DOTTED_SIDE)
 			{
-				// double dotted side
 				return DOUBLE_SIDER;
 			}
 			else if (pig1Pos == RAZORBACK)
 			{
-				// double razorback
 				return DOUBLE_RAZORBACK;
 			}
 			else if (pig1Pos == TROTTER)
 			{
-				// double trotter
 				return DOUBLE_TROTTER;
 			}
 			else if (pig1Pos == SNOUTER)
 			{
-				// double snouter
 				return DOUBLE_SNOUTER;
 			}
 			else if (pig1Pos == LEANING_JOWLER)
 			{
-				// double leaning jowler
 				return DOUBLE_LEANING_JOWLER;
 			}
 		}

@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
  * PassPigsGUI class creates a GUI for the Pass the Pigs Game
  * 
  * @author Douglas Rudau
- * @version May 10, 2019
+ * @version May 17, 2019
  *
  */
 public class PigsGameGUI extends BorderPane
@@ -179,19 +179,16 @@ public class PigsGameGUI extends BorderPane
 
 		if (event.getSource().equals(aboutGameOption))
 		{
-			// print out information about the game on another window
 			displayAboutGame();
 		}
 
 		if (event.getSource().equals(rulesOption))
 		{
-			// display rules in another window
 			displayRules();
 		}
 
 		if (event.getSource().equals(rollStatsOption))
 		{
-			// display roll stats in another window
 			displayRollStats();
 		}
 
@@ -273,6 +270,11 @@ public class PigsGameGUI extends BorderPane
 		alert.show();
 	}
 
+	/**
+	 * Function to display the winner of the game, an alert is displayed
+	 * explaining who won the game. The alter is shown until the user selects
+	 * the Ok button within the alert.
+	 */
 	private void displayWinner()
 	{
 		this.scoreboardText.setText(game.scoreboardToString());
@@ -296,7 +298,7 @@ public class PigsGameGUI extends BorderPane
 	}
 
 	/**
-	 * Update Function for the obsesrver pattern.
+	 * Update Function for the observer pattern.
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1)
@@ -314,6 +316,11 @@ public class PigsGameGUI extends BorderPane
 		}
 	}
 
+	/**
+	 * Method that generates a more human readable scoreboard for the GUI.
+	 * 
+	 * @return string representation of the scoreboard.
+	 */
 	private String generateScoreboard()
 	{
 		String s = "Human Player: " + game.getPlayerScore(HUMAN_TURN) + "\n";
@@ -342,6 +349,11 @@ public class PigsGameGUI extends BorderPane
 	 * Method to make the AI's Turn. Uses the PassPigsPlayer instance to figure
 	 * out what to do for the turn. The actions of the AI are displayed in the
 	 * Roll Status area for the human player to observer.
+	 * 
+	 * The PassThePigs Player is allowed to continue to roll as long as it is
+	 * the AI's turn. When the Model of the game changes states to the Human
+	 * player's turn, the AI's turn will end. The AI can end its turn early by
+	 * passing the pigs the human player, just like the human player could.
 	 */
 	private void aiTurn()
 	{

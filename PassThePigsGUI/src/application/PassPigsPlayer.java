@@ -1,9 +1,21 @@
 package application;
 
+/**
+ * PassPigsPlayer is the class that contians the AI agent that can play the
+ * game, PassThePigs. The PassPigsPlayer can make informed decisions about what
+ * to do within the game and send it's selected control commands back to the
+ * model of the game.
+ * 
+ * @author Douglas Rudau
+ * @version May 17, 2019
+ *
+ */
 public class PassPigsPlayer
 {
+	/** String that contians the AI's logic for the current move */
 	private String aiReasoning;
 
+	/** Number of moves the AI Agent has made this turn */
 	private int numMoves;
 
 	/**
@@ -25,7 +37,9 @@ public class PassPigsPlayer
 
 	/**
 	 * Calculates the Base Expected Value that does not change as the player's
-	 * turn and overall score changes.
+	 * turn and overall score changes. This is done once in the constuctor since
+	 * this part of the expected value does not change with the number of points
+	 * accumulated for the turn or overall game.
 	 * 
 	 * @return base expected value
 	 */
