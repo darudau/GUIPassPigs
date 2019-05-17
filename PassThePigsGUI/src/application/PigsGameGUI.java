@@ -153,7 +153,7 @@ public class PigsGameGUI extends BorderPane
 		this.setBottom(buttons);
 		this.setCenter(statusVBox);
 
-		this.scoreboardText.setText(game.scoreboardToString());
+		this.scoreboardText.setText(this.generateScoreboard());
 
 	}
 
@@ -310,8 +310,15 @@ public class PigsGameGUI extends BorderPane
 		else
 		{
 			this.rollStatusText.setText("");
-			this.scoreboardText.setText(game.scoreboardToString());
+			this.scoreboardText.setText(generateScoreboard());
 		}
+	}
+
+	private String generateScoreboard()
+	{
+		String s = "Human Player: " + game.getPlayerScore(HUMAN_TURN) + "\n";
+		s += "AI Player: " + game.getPlayerScore(AI_TURN);
+		return s;
 	}
 
 	/**
@@ -361,15 +368,15 @@ public class PigsGameGUI extends BorderPane
 			int aiMove = aiPlayer.makeMove(game.getPlayerScore(AI_TURN),
 					game.getPlayerScore(HUMAN_TURN), game.getTurnScore());
 
-
-			if(aiMove == game.ROLL)
+			if (aiMove == game.ROLL)
 			{
 				turnString += game.playerAction(aiMove) + " score for AI's turn is: "
 						+ game.getTurnScore() + "\n";
 			}
 			else
 			{
-				turnString += "AI's reasoning " + aiPlayer.getAIReasoning() + "\n" + game.playerAction(aiMove);
+				turnString += "AI's reasoning " + aiPlayer.getAIReasoning() + "\n"
+						+ game.playerAction(aiMove);
 			}
 			numMoves++;
 

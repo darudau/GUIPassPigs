@@ -73,9 +73,29 @@ public class PassPigsPlayer
 	 * AI's make move method. Takes in the human score and the player's score
 	 * and is used to determine how much of a risk taker the AI will be.
 	 * 
+	 * When the AI and human player are tied, the AI will default to playing in
+	 * a more aggressive manner, risking loosing more points. Whilst the AI is
+	 * ahead of the human player, it will take fewer risks, playing more
+	 * conservatively.
+	 * 
+	 * The expected value of a roll is used make the decision. This value
+	 * changes with the number of points the AI earns for the current turn as
+	 * well as for the total overall points earned in the game. Each roll means
+	 * the AI will be taking a risk in losing the points earned for the turn.
+	 * There is also a 1/100 chance that the AI could roll an Oinker, which is
+	 * when the pigs land in such a way that they are touching. This means the
+	 * AI would lose all the points earned for the turn and the game, reseting
+	 * the score to zero.
+	 * 
 	 * @param aiScore
+	 *            the AI's current score for the game
 	 * @param humanScore
-	 * @return
+	 *            the Human players current score for the game
+	 * @param turnscore
+	 *            the number of points the AI has earned for the turn
+	 * @return PassThePigsGame.ROLL (1) if the AI decides to roll the pigs or
+	 *         PassThePigsGame.PASS_TO_NEXT (2) if the AI decides to pass the
+	 *         pigs
 	 */
 	public int makeMove(int aiScore, int humanScore, int turnscore)
 	{
@@ -143,6 +163,28 @@ public class PassPigsPlayer
 		}
 	}
 
+	/**
+	 * Calculate the current expected value for the AI's turn. The AI's current
+	 * total score for the roll and for their overall score for the game. A
+	 * double value is returned that is calculated based off the likelihood of
+	 * the pigs landing in the Pig Out position, where the AI will loose all the
+	 * points accrued for the roll. The value is effected by the chance of
+	 * getting an Oinker, which is when the pigs land in a position in which
+	 * they are touching, meaning the player looses all the points they have
+	 * Accrued for the game.
+	 * 
+	 * A double value is a returned. A positive value means the player is more
+	 * likely to gain points from the roll than lose points; whereas a negative
+	 * expected value means the player is more likely to lose points if they
+	 * should roll. The magnitude of the value indicates the average number of
+	 * points the player could earn.
+	 * 
+	 * @param turnScore
+	 *            total points earned by the AI for this turn
+	 * @param totalScore
+	 *            total points earned for the whole game
+	 * @return the expected value for this roll
+	 */
 	private double getCurrentExpectedValue(int turnScore, int totalScore)
 	{
 		double currentEV = this.baseExpectedValue;
@@ -153,19 +195,24 @@ public class PassPigsPlayer
 		return currentEV;
 	}
 
+	/**
+	 * Used to reset the number of moves to zero. This method is called by the
+	 * controller when the AI's turn is finished.
+	 */
 	public void resetNumMoves()
 	{
 		this.numMoves = 0;
 	}
 
+	/**
+	 * Returns the string that contians the AI's logical description for its
+	 * current move.
+	 * 
+	 * @return ai reasoning string
+	 */
 	public String getAIReasoning()
 	{
 		return this.aiReasoning;
-	}
-
-	public void resetAIReasoning()
-	{
-		this.aiReasoning = "";
 	}
 
 }
