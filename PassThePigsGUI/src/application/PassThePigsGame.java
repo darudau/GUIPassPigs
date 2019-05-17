@@ -35,7 +35,7 @@ public class PassThePigsGame extends Observable
 	/** The Winner of the game */
 	private int winner;
 
-	/** Previous postion for each of the pigs */
+	/** Previous position for each of the pigs */
 	private String pig1PrevPos;
 	private String pig2PrevPos;
 
@@ -49,7 +49,6 @@ public class PassThePigsGame extends Observable
 	private int[] pigPositionScores;
 
 	/** Constants used to represent states for the pigs */
-	// score values are here to allow for modification
 	public final static int PLAIN_SIDE = 0;
 	public final static int DOTTED_SIDE = 1;
 	public final static int RAZORBACK = 2;
@@ -57,8 +56,16 @@ public class PassThePigsGame extends Observable
 	public final static int SNOUTER = 4;
 	public final static int LEANING_JOWLER = 5;
 	public final static int PIG_OUT = -1;
+	
+	/** Constants that are the scores for each pig's roll */
+	public final static int SIDE_SCORE = 1;
+	public final static int RAZORBACK_SCORE = 5;
+	public final static int TROTTER_SCORE = 5;
+	public final static int SNOUTER_SCORE = 10;
+	public final static int LEANING_JOWLER_SCORE = 15;
 
 	/** int representations for the Pigs in pairs */
+	// these are also the scores for these rolls
 	public final static int DOUBLE_RAZORBACK = 20;
 	public final static int DOUBLE_TROTTER = 20;
 	public final static int DOUBLE_SNOUTER = 40;
@@ -100,13 +107,14 @@ public class PassThePigsGame extends Observable
 		pig2 = new Pig();
 
 		pigPositionScores = new int[6];
-		pigPositionScores[PLAIN_SIDE] = 1;
-		pigPositionScores[DOTTED_SIDE] = 1;
-		pigPositionScores[RAZORBACK] = 5;
-		pigPositionScores[TROTTER] = 5;
-		pigPositionScores[SNOUTER] = 10;
-		pigPositionScores[LEANING_JOWLER] = 15;
+		pigPositionScores[PLAIN_SIDE] = SIDE_SCORE;
+		pigPositionScores[DOTTED_SIDE] = SIDE_SCORE;
+		pigPositionScores[RAZORBACK] = RAZORBACK_SCORE;
+		pigPositionScores[TROTTER] = TROTTER_SCORE;
+		pigPositionScores[SNOUTER] = SNOUTER_SCORE;
+		pigPositionScores[LEANING_JOWLER] = LEANING_JOWLER_SCORE;
 
+		// -1 means the game is not over yet
 		winner = -1;
 
 	}
@@ -131,6 +139,12 @@ public class PassThePigsGame extends Observable
 		return false;
 	}
 
+	/**
+	 * Method to get the winner of the game.
+	 * 
+	 * @return the player that won the game's ID number, -1 if the game is not
+	 *         over
+	 */
 	public int getWinner()
 	{
 		return winner;

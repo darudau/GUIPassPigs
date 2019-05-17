@@ -357,7 +357,7 @@ public class PigsGameGUI extends BorderPane
 	 */
 	private void aiTurn()
 	{
-		String turnString = "";
+		String turnString = "Base Expected Value: " + aiPlayer.getBaseExpectedValue() + "\n";
 		int numMoves = 0;
 
 		while (game.getPlayerTurn() == AI_TURN)

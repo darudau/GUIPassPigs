@@ -48,30 +48,37 @@ public class PassPigsPlayer
 		double ev = 0;
 
 		ev += 0.35 * 0.22
-				* (PassThePigsGame.DOTTED_SIDE + PassThePigsGame.RAZORBACK);
-		ev += 0.35 * 0.09 * (PassThePigsGame.DOTTED_SIDE + PassThePigsGame.TROTTER);
-		ev += 0.35 * 0.03 * (PassThePigsGame.DOTTED_SIDE + PassThePigsGame.SNOUTER);
+				* (PassThePigsGame.SIDE_SCORE + PassThePigsGame.RAZORBACK_SCORE);
+		ev += 0.35 * 0.09
+				* (PassThePigsGame.SIDE_SCORE + PassThePigsGame.TROTTER_SCORE);
+		ev += 0.35 * 0.03
+				* (PassThePigsGame.SIDE_SCORE + PassThePigsGame.SNOUTER_SCORE);
 		ev += 0.35 * 0.01
-				* (PassThePigsGame.DOTTED_SIDE + PassThePigsGame.LEANING_JOWLER);
+				* (PassThePigsGame.SIDE_SCORE + PassThePigsGame.LEANING_JOWLER);
 
 		ev += 0.30 * 0.22
-				* (PassThePigsGame.DOTTED_SIDE + PassThePigsGame.RAZORBACK);
-		ev += 0.30 * 0.09 * (PassThePigsGame.DOTTED_SIDE + PassThePigsGame.TROTTER);
-		ev += 0.30 * 0.03 * (PassThePigsGame.DOTTED_SIDE + PassThePigsGame.SNOUTER);
-		ev += 0.30 * 0.01
-				* (PassThePigsGame.DOTTED_SIDE + PassThePigsGame.LEANING_JOWLER);
+				* (PassThePigsGame.SIDE_SCORE + PassThePigsGame.RAZORBACK_SCORE);
+		ev += 0.30 * 0.09
+				* (PassThePigsGame.SIDE_SCORE + PassThePigsGame.TROTTER_SCORE);
+		ev += 0.30 * 0.03
+				* (PassThePigsGame.SIDE_SCORE + PassThePigsGame.SNOUTER_SCORE);
+		ev += 0.30 * 0.01 * (PassThePigsGame.SIDE_SCORE
+				+ PassThePigsGame.LEANING_JOWLER_SCORE);
 
-		ev += 0.22 * 0.09 * (PassThePigsGame.RAZORBACK + PassThePigsGame.TROTTER);
-		ev += 0.22 * 0.03 * (PassThePigsGame.RAZORBACK + PassThePigsGame.SNOUTER);
-		ev += 0.22 * 0.01
-				* (PassThePigsGame.RAZORBACK + PassThePigsGame.LEANING_JOWLER);
+		ev += 0.22 * 0.09
+				* (PassThePigsGame.RAZORBACK_SCORE + PassThePigsGame.TROTTER_SCORE);
+		ev += 0.22 * 0.03
+				* (PassThePigsGame.RAZORBACK_SCORE + PassThePigsGame.SNOUTER_SCORE);
+		ev += 0.22 * 0.01 * (PassThePigsGame.RAZORBACK_SCORE
+				+ PassThePigsGame.LEANING_JOWLER_SCORE);
 
-		ev += 0.09 * 0.03 * (PassThePigsGame.TROTTER + PassThePigsGame.SNOUTER);
-		ev += 0.09 * 0.01
-				* (PassThePigsGame.TROTTER + PassThePigsGame.LEANING_JOWLER);
+		ev += 0.09 * 0.03
+				* (PassThePigsGame.TROTTER_SCORE + PassThePigsGame.SNOUTER_SCORE);
+		ev += 0.09 * 0.01 * (PassThePigsGame.TROTTER_SCORE
+				+ PassThePigsGame.LEANING_JOWLER_SCORE);
 
-		ev += 0.03 * 0.01
-				* (PassThePigsGame.SNOUTER + PassThePigsGame.LEANING_JOWLER);
+		ev += 0.03 * 0.01 * (PassThePigsGame.SNOUTER_SCORE
+				+ PassThePigsGame.LEANING_JOWLER_SCORE);
 
 		ev += 0.35 * 0.35 * PassThePigsGame.DOUBLE_SIDER;
 		ev += 0.30 * 0.30 * PassThePigsGame.DOUBLE_SIDER;
@@ -152,7 +159,8 @@ public class PassPigsPlayer
 		}
 		else
 		{
-			if (scoregap < PassThePigsGame.POINTS_TO_WIN / 10 && (int) currentEV > 1)
+			if (scoregap < PassThePigsGame.POINTS_TO_WIN / 10
+					&& (int) currentEV > (int) (baseExpectedValue / 2))
 			{
 				// AI is ahead of human player, so it will play more
 				// conservatively here
@@ -227,6 +235,16 @@ public class PassPigsPlayer
 	public String getAIReasoning()
 	{
 		return this.aiReasoning;
+	}
+
+	/**
+	 * gets the current base ev
+	 * 
+	 * @return base Expected Value
+	 */
+	public double getBaseExpectedValue()
+	{
+		return this.baseExpectedValue;
 	}
 
 }
