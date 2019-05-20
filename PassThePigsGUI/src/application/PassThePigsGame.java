@@ -7,9 +7,16 @@ import java.util.Random;
 /**
  * The game model for Pass The Pigs. This model allows the player to interact
  * with it through the playerAction function.
- * 
- *
- * TODO Type Rules here
+ * <p>
+ * The first player to score 100 or more points wins the game. Each player will
+ * roll the pigs to attempt to gain points. The player may roll the pigs as many
+ * times as they would like, however with each roll the points you lose
+ * increases. The player’s turn is done if they roll a Pig Out (where the pigs
+ * land on opposite side), an Oinker (where the pigs land touching), or the
+ * player decides to pass the pigs to the next player and record their total
+ * number of points. If the player rolls an Oinker, their score for the game is
+ * reset to zero. Players can pass the pigs without rolling them, though this is
+ * not recommended as no points will be gained. *
  * 
  * @author Douglas Rudau
  * @version April 20, 2019
@@ -56,7 +63,7 @@ public class PassThePigsGame extends Observable
 	public final static int SNOUTER = 4;
 	public final static int LEANING_JOWLER = 5;
 	public final static int PIG_OUT = -1;
-	
+
 	/** Constants that are the scores for each pig's roll */
 	public final static int SIDE_SCORE = 1;
 	public final static int RAZORBACK_SCORE = 5;

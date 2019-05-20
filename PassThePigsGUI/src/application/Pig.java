@@ -114,6 +114,13 @@ public class Pig
 		return outcomeNames[position];
 	}
 
+	/**
+	 * Gets the weight of the pig landing in this position
+	 * 
+	 * @param pigPosition
+	 *            integer representation of the pig's position
+	 * @return weight of the pig position as a percent
+	 */
 	public int getWieght(int pigPosition)
 	{
 		return weights[pigPosition];

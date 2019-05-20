@@ -19,7 +19,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * PassPigsGUI class creates a GUI for the Pass the Pigs Game
+ * PassPigsGUI class creates a GUI for the Pass the Pigs Game This GUI also
+ * Contains the controller for the PassThePigsGame
  * 
  * @author Douglas Rudau
  * @version May 17, 2019
@@ -357,7 +358,8 @@ public class PigsGameGUI extends BorderPane
 	 */
 	private void aiTurn()
 	{
-		String turnString = "Base Expected Value: " + aiPlayer.getBaseExpectedValue() + "\n";
+		String turnString = "Base Expected Value: " + aiPlayer.getBaseExpectedValue()
+				+ "\n";
 		int numMoves = 0;
 
 		while (game.getPlayerTurn() == AI_TURN)
