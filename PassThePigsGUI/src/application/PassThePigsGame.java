@@ -16,7 +16,7 @@ import java.util.Random;
  * player decides to pass the pigs to the next player and record their total
  * number of points. If the player rolls an Oinker, their score for the game is
  * reset to zero. Players can pass the pigs without rolling them, though this is
- * not recommended as no points will be gained. *
+ * not recommended as no points will be gained. 
  * 
  * @author Douglas Rudau
  * @version April 20, 2019

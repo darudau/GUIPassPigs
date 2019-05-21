@@ -251,10 +251,20 @@ public class PigsGameGUI extends BorderPane
 	 */
 	private void displayRules()
 	{
+		String rules = "The first player to score 100 or more points wins the game. Each player will\n"
+				+ "roll the pigs to attempt to gain points. The player may roll the pigs as many\n"
+				+ "times as they would like, however with each roll the points you lose\n"
+				+ "increases. The player’s turn is done if they roll a Pig Out (where the pigs\n"
+				+ "land on opposite side), an Oinker (where the pigs land touching), or the\n"
+				+ "player decides to pass the pigs to the next player and record their total\n"
+				+ "number of points. If the player rolls an Oinker, their score for the game is\n"
+				+ "reset to zero. Players can pass the pigs without rolling them, though this is\n"
+				+ "not recommended as no points will be gained. ";
+
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Pass the Pigs Rules");
-		alert.setHeaderText("");
-		alert.setContentText("");
+		alert.setHeaderText("Pass the Pigs Rules");
+		alert.setContentText(rules);
 		alert.show();
 	}
 
